@@ -101,18 +101,22 @@
               access_token: access_token,
               refresh_token: refresh_token
             });
-
+            let query = "Nonagon infinity";
             $.ajax({
-                url: 'https://api.spotify.com/v1/search?q=king%20gizzard%20&%20the%20lizard%20wizard&type=artist',
+                url: 'https://api.spotify.com/v1/me/albums',
+                method: 'get',
                 headers: {
                   'Authorization': 'Bearer ' + access_token
                 },
                 success: function(response) {
                   userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-                  let dataContainer = document.createElement('div');
-                  dataContainer.innerHTML = JSON.stringify(response);
                   console.log(response);
-                  document.body.appendChild(dataContainer);
+                  response.items.forEach( album => {
+                    let dataContainer = document.createElement('div');
+                    let jsonAlbum = JSON.stringify(album.album.name);
+                    dataContainer.innerHTML = jsonAlbum;
+                    document.body.appendChild(dataContainer);
+                  });
                   $('#login').hide();
                   $('#loggedin').show();
                 }
