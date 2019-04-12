@@ -103,13 +103,16 @@
             });
 
             $.ajax({
-                url: 'https://api.spotify.com/v1/me',
+                url: 'https://api.spotify.com/v1/search?q=king%20gizzard%20&%20the%20lizard%20wizard&type=artist',
                 headers: {
                   'Authorization': 'Bearer ' + access_token
                 },
                 success: function(response) {
                   userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-
+                  let dataContainer = document.createElement('div');
+                  dataContainer.innerHTML = JSON.stringify(response);
+                  console.log(response);
+                  document.body.appendChild(dataContainer);
                   $('#login').hide();
                   $('#loggedin').show();
                 }

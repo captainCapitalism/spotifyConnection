@@ -7,15 +7,15 @@
  * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
-var express = require('express'); // Express web server framework
-var request = require('request'); // "Request" library
-var cors = require('cors');
-var querystring = require('querystring');
-var cookieParser = require('cookie-parser');
+var express       = require('express'); // Express web server framework
+var request       = require('request'); // "Request" library
+var cors          = require('cors');
+var querystring   = require('querystring');
+var cookieParser  = require('cookie-parser');
 
-var client_id = 'CLIENT_ID'; // Your client id
-var client_secret = 'CLIENT_SECRET'; // Your secret
-var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
+var client_id = process.env.ID; // Your client id
+var client_secret = process.env.SECRET; // Your secret
+var redirect_uri = process.env.REDIRECTURI; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -57,7 +57,7 @@ app.get('/login', function(req, res) {
     }));
 });
 
-app.get('/callback', function(req, res) {
+app.get('/example-me', function(req, res) {
 
   // your application requests refresh and access tokens
   // after checking the state parameter
@@ -118,6 +118,64 @@ app.get('/callback', function(req, res) {
     });
   }
 });
+
+app.get('/callback', function(req, res){
+
+  var code = req.query.code || null;
+  var state = req.query.state || null;
+  var storedState = req.cookies ? req.cookies[stateKey] : null;
+
+  if (state === null || state !== storedState) {
+    res.redirect('/#' +
+      querystring.stringify({
+        error: 'state_mismatch'
+      }));
+  } else {
+    res.clearCookie(stateKey);
+    var authOptions = {
+      url: 'https://accounts.spotify.com/api/token',
+      form: {
+        code: code,
+        redirect_uri: redirect_uri,
+        grant_type: 'authorization_code'
+      },
+      headers: {
+        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+      },
+      json: true
+    };
+
+    request.post(authOptions, function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+
+        var access_token = body.access_token,
+            refresh_token = body.refresh_token;
+
+        var options = {
+          url: 'https://api.spotify.com/v1/search?q=king%20gizzard%20&%20the%20lizard%20wizard&type=artist',
+          headers: {'Authorization': 'Bearer ' + access_token},
+          json: true
+        };
+
+        // use the access token to access the Spotify Web API
+        request.get(options, function(error, response, body) {
+          console.log(body.artists);
+        });
+        // we can also pass the token to the browser to make requests from there
+        res.redirect('/#' +
+          querystring.stringify({
+            access_token: access_token,
+            refresh_token: refresh_token
+          }));
+      } else {
+        res.redirect('/#' +
+          querystring.stringify({
+            error: 'invalid_token'
+          }));
+      }
+    });
+  }
+})
 
 app.get('/refresh_token', function(req, res) {
 
