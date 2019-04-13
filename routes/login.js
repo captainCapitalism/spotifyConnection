@@ -5,11 +5,6 @@ const querystring   = require('querystring');
 
 const app = express();
 const {client_id, redirect_uri, stateKey} = require('../config/config');
-// const client_id = process.env.ID; 
-// const client_secret = process.env.SECRET;
-// const redirect_uri = process.env.REDIRECTURI;
-// let stateKey = 'spotify_auth_state';
-
 
 app.get('/', login);
 

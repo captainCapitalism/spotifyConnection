@@ -5,10 +5,12 @@ const querystring   = require('querystring');
 const cookieParser  = require('cookie-parser');
 
 const app = express();
+app.set('view engine', 'pug');
+
 app.use(express.static(__dirname + '/scripts'));
 app.use(express.static(__dirname + '/public'))
-   .use(cors())
-   .use(cookieParser());
+  .use(cors())
+  .use(cookieParser());
 
 const loginRoutes = require('./routes/login');
 const indexRoutes = require('./routes/index');   

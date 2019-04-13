@@ -8,8 +8,11 @@ const cookieParser  = require('cookie-parser');
 const {client_id, client_secret, redirect_uri, stateKey} = require('../config/config');
 const app = express();
 
-
+app.get("/", renderIndex);  
 app.get('/callback', getAlbums);
+function renderIndex(req, res){
+    res.render('index', {title: 'hey', message: 'hello'})
+}
 
 function getAlbums(req, res){
 
