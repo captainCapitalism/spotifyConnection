@@ -1,10 +1,14 @@
 html
     head
         title= "Your site"
+        link(rel="stylesheet" href="style.css")
     body
         h1= "You logged in succesfully"
         button(onclick="getAlbums()")
-        div
+        div(class="album-container")
             each album in body
-                a(href=album.url)
-                    img(src=album.image)
+                div(id=album.id)
+                    a(href=album.url)
+                        img(src=album.image)
+                    p=album.name 
+                    p=album.artist

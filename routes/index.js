@@ -50,17 +50,21 @@ function fetchAlbums(res, authOptions){
         };
         request.get(options, function(error, response, body) {
             console.log(body.items[5]);
-            let images = body.items.map(
-                album => {
-                    let object = {}
-                    object['url'] = album.album.external_urls['spotify']
-                    object['image'] = album.album.images[1].url 
-                    return object;
-                });
+            let images = body.items.map(mapAlbum);
             res.render('user', {body: images});
         });
         } else { sendError(res, 'invalid_token') }
     });
+}
+
+function mapAlbum({ added_at, album }){
+    let object = {}
+    object['id'] = album.id;
+    object['url'] = album.external_urls['spotify'];
+    object['image'] = album.images[1].url;
+    object['artist'] = album.artists[0].name;
+    object['name'] = album.name;
+    return object;
 }
 
 
