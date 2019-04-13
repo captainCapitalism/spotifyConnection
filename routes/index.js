@@ -49,8 +49,14 @@ function fetchAlbums(res, authOptions){
                 json: true
         };
         request.get(options, function(error, response, body) {
+            console.log(body.items[5]);
             let images = body.items.map(
-                album => album.album.images[0].url );
+                album => {
+                    let object = {}
+                    object['url'] = album.album.external_urls['spotify']
+                    object['image'] = album.album.images[1].url 
+                    return object;
+                });
             res.render('user', {body: images});
         });
         } else { sendError(res, 'invalid_token') }
