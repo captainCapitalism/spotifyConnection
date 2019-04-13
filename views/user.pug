@@ -1,0 +1,9 @@
+html
+    head
+        title= "Your site"
+    body
+        h1= "You logged in succesfully"
+        button(onclick="getAlbums()")
+        div
+            each link in body
+                img(src=link)
