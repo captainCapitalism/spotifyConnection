@@ -41,16 +41,40 @@ function fetchAlbums(res, authOptions){
         const access_token = body.access_token;
         process.env.ACCESS_TOKEN = body.access_token;
         const options = {
-                url: 'https://api.spotify.com/v1/me/albums',
+                url: 'https://api.spotify.com/v1/me/albums?offset=0&limit=50',
                 headers: {'Authorization': 'Bearer ' + access_token},
-                json: true
+                json: true,
         };
-        request.get(options, function(error, response, body) {
-            let images = body.items.map(mapAlbum);
-            res.render('albums', {body: images});
-        });
+        const images = requestAlbums(options);
+        images.then( resolve => {
+            console.log(resolve);
+            res.render('albums', {body: resolve});
+        }).catch( error => console.log(error));
         } else { sendError(res, 'invalid_token') }
     });
+}
+
+async function requestAlbums(options, images=[]){
+    const promise = new Promise( (resolve, reject) => {
+        request.get(options, function(error, response, body){
+            if(error){
+                console.log(error);
+                reject(error);
+            } else {
+                images = body.items.map(mapAlbum);
+                if(body.next){
+                    options.url = body.next;
+                    requestAlbums(options, images).then( output => {
+                        resolve(images.concat(output));
+                    }).catch( error => console.log(error));
+                } else {
+                    resolve(images);
+                }
+            }
+        });
+    });
+    let result = await promise;
+    return result;
 }
 
 function mapAlbum({ added_at, album }){
