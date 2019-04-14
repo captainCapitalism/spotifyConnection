@@ -1,9 +1,6 @@
 const express       = require('express'); 
 const request       = require('request'); 
-const cors          = require('cors');
 const querystring   = require('querystring');
-const cookieParser  = require('cookie-parser');
-const pug           = require('pug');
 
 const {client_id, client_secret, redirect_uri, stateKey} = require('../config/config');
 const app = express();
@@ -38,20 +35,19 @@ function getAlbums(req, res){
     }
 };
 
-
 function fetchAlbums(res, authOptions){
     request.post(authOptions, function(error, response, body) {
         if (!error && response.statusCode === 200) {
         const access_token = body.access_token;
+        process.env.ACCESS_TOKEN = body.access_token;
         const options = {
                 url: 'https://api.spotify.com/v1/me/albums',
                 headers: {'Authorization': 'Bearer ' + access_token},
                 json: true
         };
         request.get(options, function(error, response, body) {
-            console.log(body.items[5]);
             let images = body.items.map(mapAlbum);
-            res.render('user', {body: images});
+            res.render('albums', {body: images});
         });
         } else { sendError(res, 'invalid_token') }
     });
@@ -66,7 +62,6 @@ function mapAlbum({ added_at, album }){
     object['name'] = album.name;
     return object;
 }
-
 
 function sendError(res, error){
     res.redirect('/#' +
