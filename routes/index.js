@@ -46,15 +46,13 @@ function fetchAlbums(res, authOptions){
                 json: true,
         };
         const images = requestAlbums(options);
-        images.then( resolve => {
-            console.log(resolve);
-            res.render('albums', {body: resolve});
+        images.then( resolve => { res.render('albums', {body: resolve})
         }).catch( error => console.log(error));
         } else { sendError(res, 'invalid_token') }
     });
 }
 
-async function requestAlbums(options, images=[]){
+function requestAlbums(options, images=[]){
     const promise = new Promise( (resolve, reject) => {
         request.get(options, function(error, response, body){
             if(error){
@@ -73,8 +71,7 @@ async function requestAlbums(options, images=[]){
             }
         });
     });
-    let result = await promise;
-    return result;
+    return promise;
 }
 
 function mapAlbum({ added_at, album }){

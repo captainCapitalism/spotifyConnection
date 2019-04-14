@@ -1,15 +1,21 @@
 html
     head
         script(src="ajax.js")
-        title= "Your site"
+        title= "Your albums"
         link(rel="stylesheet" href="style.css")
     body
         h1= "You logged in succesfully"
         button(onclick="getAlbums()")
-        div(class="album-container")
-            each album in body
-                div(id=album.id)
-                    a(href=album.url)
-                        img(src=album.image)
-                    p=album.name 
-                    p=album.artist
+        div(class="ui")
+            div(class="album-container")
+                each album in body
+                    div(id=album.id)
+                        a(href=album.url)
+                            img(src=album.image)
+                        p=album.name 
+                        p=album.artist
+                        div(onclick=`myFunction('${album.id}')`)="hello"
+            div(class="folder-container")
+                button(onclick="createFolder()" class="btn-create")="Create Folder"
+
+        script(src="albums.js")
