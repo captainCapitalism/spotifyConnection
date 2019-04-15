@@ -14,8 +14,9 @@ html
                             img(src=album.image)
                         p=album.name 
                         p=album.artist
-                        div(onclick=`myFunction('${album.id}')`)="hello"
-            div(class="folder-container")
+                        input(type="text" list="folder-list")
+                        button(onclick=`addToFolder('${album.id}')`)="Add to folder"
+            div(id="folder-container" class="folder-container")
                 div(class="folder-maker")
                     button(onclick="createFolder()" class="btn-create")="Create Folder"
                     input(type="text" id="folder-name")
