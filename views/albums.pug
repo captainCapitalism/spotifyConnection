@@ -9,11 +9,11 @@ html
         div(class="ui")
             div(class="album-container")
                 each album in body
-                    div(id=album.id)
+                    div(id=album.id class="album")
                         a(href=album.url)
                             img(src=album.image)
-                        p=album.name 
-                        p=album.artist
+                        p(class="name")=album.name 
+                        p(class="artist")=album.artist
                         input(type="text" list="folder-list")
                         button(onclick=`addToFolder('${album.id}')`)="Add to folder"
             div(id="folder-container" class="folder-container")

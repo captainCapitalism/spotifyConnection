@@ -1,1 +1,28 @@
-{"21":[],"212":[],"666":[],"Muzyka do słuchania":[],"sa":[],"Muzyka nie do słuchania":[],"bubu":[],"bubu1":[],"fa":[],"a":[],"dupa":[],"dupa1":["https://open.spotify.com/album/2QuvyczU1YXzd37pqwvDPE","https://open.spotify.com/album/2QuvyczU1YXzd37pqwvDPE","https://open.spotify.com/album/2QuvyczU1YXzd37pqwvDPE","https://open.spotify.com/album/2QuvyczU1YXzd37pqwvDPE","https://open.spotify.com/album/2QuvyczU1YXzd37pqwvDPE","https://open.spotify.com/album/5MH5v8RKUnqsaBwqTEAHLU","https://open.spotify.com/album/5MH5v8RKUnqsaBwqTEAHLU"]}
+{
+    "21": [],
+    "212": [],
+    "666": [
+        {
+            "url": "https://open.spotify.com/album/2QuvyczU1YXzd37pqwvDPE",
+            "name": "Zazal",
+            "artist": "Egschiglen",
+            "img": "https://i.scdn.co/image/940c7573ab6c81f368ebe202e0fc0cc948fb8924"
+        }
+    ],
+    "Muzyka do słuchania": [],
+    "sa": [],
+    "Muzyka nie do słuchania": [],
+    "bubu": [],
+    "bubu1": [],
+    "fa": [],
+    "a": [],
+    "dupa": [],
+    "dupa1": [
+        {
+            "url": "https://open.spotify.com/album/1us1SPW98rVMh2zzHqSYSI",
+            "name": "I'm In Your Mind Fuzz",
+            "artist": "King Gizzard &amp; The Lizard Wizard",
+            "img": "https://i.scdn.co/image/2e297ddbe70f6b989bb13c9a4fc94ca2d51668e9"
+        }
+    ]
+}

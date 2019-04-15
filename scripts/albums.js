@@ -52,25 +52,31 @@ function createMissingFolders(data){
                 folderContainer.appendChild(newElement);
             }
         }    
-    } else {
-        console.log("Did not receive data");
-    }
+    } else {console.log("Did not receive data")}
 }
 
 function addToFolder(id){
     const albumContainer = document.getElementById(id);
-    const url = albumContainer.getElementsByTagName('a')[0].href;
     const folder = albumContainer.getElementsByTagName('input')[0].value;
-    const ajaxOptions = {
-        url: "/folder",
-        method: "put",
-        data: {
-            url: url,
-            folder: folder
-        },
-        callback: callback
-    }
-    ajax(ajaxOptions);
+    const albumData = {
+        url: albumContainer.getElementsByTagName('a')[0].href, 
+        name: albumContainer.getElementsByClassName('name')[0].innerHTML,
+        artist: albumContainer.getElementsByClassName('artist')[0].innerHTML,
+        img: albumContainer.getElementsByTagName('img')[0].src
+    };
+    if(albumData.url && albumData.name && albumData.artist && albumData.img && folder){
+        const ajaxOptions = {
+            url: "/folder/album",
+            method: "post",
+            data: {
+                albumData: albumData,
+                folder: folder
+            },
+            callback: callback
+        }
+        ajax(ajaxOptions);
+    } else {console.log("Error retriving data");}
+    
 }
 
 function callback(data){
