@@ -7,8 +7,19 @@ app.post("/", createFolder);
 app.put("/", editFolder);
 
 function editFolder(req, res){
-    console.log(req.body);
-    res.send({msg: "put route"});
+    const file = JSON.parse(fs.readFileSync("folders.json"));
+    if(req.body.folder in file){
+
+        if(!(file[req.body.folder].includes(req.body.url))){
+            file[req.body.folder].push(req.body.url);
+            fs.writeFileSync("folders.json", JSON.stringify(file));
+            res.send({msg: "Added album to folder"});
+        } else {
+            res.send({msg: "Album already in folder"});
+        }
+    } else {
+        res.send({msg: "specified folder does not exists"});
+    }
 }
 
 function fetchFolders(req, res){
@@ -28,7 +39,7 @@ function appendJSON(fileName, data){
     if(data in file){
         return {msg:{error: "folder with given name already exists"}, file};
     } else {
-        file[data] = {};
+        file[data] = [];
         fs.writeFileSync(fileName, JSON.stringify(file));    
         return {msg: {success: "folder created"}, file};
     }
