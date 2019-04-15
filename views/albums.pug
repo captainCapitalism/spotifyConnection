@@ -16,6 +16,7 @@ html
                         p=album.artist
                         div(onclick=`myFunction('${album.id}')`)="hello"
             div(class="folder-container")
-                button(onclick="createFolder()" class="btn-create")="Create Folder"
-
+                div(class="folder-maker")
+                    button(onclick="createFolder()" class="btn-create")="Create Folder"
+                    input(type="text" id="folder-name")
         script(src="albums.js")
