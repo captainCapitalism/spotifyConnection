@@ -7,6 +7,11 @@ app.post("/", createFolder);
 app.put("/", changeAlbumName);
 app.delete("/", deleteAlbum);
 app.post("/album", addAlbumToFolder);
+app.get("/download", downloadJSON);
+
+function downloadJSON(req, res){
+    res.download("folders.json");
+}
 
 function changeAlbumName(req, res){
 

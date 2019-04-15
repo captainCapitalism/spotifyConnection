@@ -79,6 +79,17 @@ function addToFolder(id){
     
 }
 
+function downloadFolders(){
+    
+    const url = "/folder/download";
+    const method = "get";
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.setRequestHeader("Content-Type", "application/download");
+    xhr.send();   
+
+}
+
 function callback(data){
     console.log(data);
 }

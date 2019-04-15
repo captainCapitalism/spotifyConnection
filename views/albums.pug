@@ -18,6 +18,8 @@ html
                         button(onclick=`addToFolder('${album.id}')`)="Add to folder"
             div(id="folder-container" class="folder-container")
                 div(class="folder-maker")
+                    form(action="/folder/download")
+                        input(type="submit" value="Download folders")
                     button(onclick="createFolder()" class="btn-create")="Create Folder"
                     input(type="text" id="folder-name")
         script(src="albums.js")
