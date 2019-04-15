@@ -11,8 +11,28 @@
     ],
     "Muzyka do słuchania": [],
     "sa": [],
-    "Muzyka nie do słuchania": [],
-    "bubu": [],
+    "Muzyka nie do słuchania": [
+        {
+            "url": "https://open.spotify.com/album/21y57ceVSrmVajeML735Ei",
+            "name": "Khusugtun Ethnic-Ballad Group",
+            "artist": "Khusugtun",
+            "img": "https://i.scdn.co/image/0edf8afae4f3769eb9c20013e5c89ee002cc175c"
+        },
+        {
+            "url": "https://open.spotify.com/album/0NWuUT1moNpO9yaChDRwA0",
+            "name": "Mushroom Mantras",
+            "artist": "Vibravoid",
+            "img": "https://i.scdn.co/image/9201fb430772120b1d4a05029c91b1a1e258e316"
+        }
+    ],
+    "bubu": [
+        {
+            "url": "https://open.spotify.com/album/4A3OabPcOKXKjLdC3mRaV1",
+            "name": "Voices from the Distant Steppe",
+            "artist": "Shu-de",
+            "img": "https://i.scdn.co/image/d65d153a63b463d28bd676cc7e54dab6b722075b"
+        }
+    ],
     "bubu1": [],
     "fa": [],
     "a": [],

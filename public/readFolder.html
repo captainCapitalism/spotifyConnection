@@ -1,16 +1,80 @@
 <html>
     <head>
         <title>Read your spotify folders</title>
+        <style>
+            .folder {
+                border: 1em;
+                border-color: black;
+                background-color: green;
+                border-style: solid;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .album {
+                border-color: red;
+                border: 1em;
+                border-style: solid;
+            }
+        </style>
     </head>
     <body>
         <input id="read-file" type="file" name="myFolders">
-        <button onclick="readFile()">Gimme folders!</button>
-
 
     <script>
-        function readFile(){
-            console.log("hi");
+    (function(){
+    
+    function onChange(event) {
+        var reader = new FileReader();
+        reader.onload = onReaderLoad;
+        reader.readAsText(event.target.files[0]);
+    }
+
+    function onReaderLoad(event){
+        console.log(event.target.result);
+        const obj = JSON.parse(event.target.result);
+        renderFolderData(obj);
+    }
+    
+    document.getElementById('read-file').addEventListener('change', onChange);
+    }());
+
+    function renderFolderData(data){
+        const container = document.createElement('div');
+        for(key in data){
+            if(!(data[key].length===0)){
+                const folder = document.createElement('div');
+                folder.classList = "folder";
+                folder.id = "folder-" + key;
+                const label = document.createElement('label');
+                label.innerHTML = key;
+                container.appendChild(label);
+                const albums = data[key].map( album => getAlbumData(album));
+                albums.forEach(album => {
+                    folder.appendChild(album);
+                })
+                container.appendChild(folder);
+            }
         }
+        document.body.appendChild(container);
+    }
+    function getAlbumData(album){
+        const container = document.createElement('div');
+        container.classList = "album";
+        const link = document.createElement('a');
+        link.href = album.url;
+        const img = document.createElement('img');
+        img.src = album.img;
+        const name = document.createElement('p');
+        name.innerHTML = album.name;
+        const artist = document.createElement('p');
+        artist.innerHTML = album.artist;
+        link.appendChild(img);
+        container.appendChild(link);
+        container.appendChild(name);
+        container.appendChild(artist);
+        return container;
+    }
+
     </script>
     </body>
 </html>
